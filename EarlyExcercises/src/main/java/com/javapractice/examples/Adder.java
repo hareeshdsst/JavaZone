@@ -13,7 +13,8 @@ public class Adder{
 		 int operand1 = 0;
 		 int operand2 = 0;
 		 //Reads the users input
-		 Scanner sc = new Scanner(System.in);
+		 @SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
 		 
 		 String stringOperand1 = "";
 		 String stringOperand2 = "";
