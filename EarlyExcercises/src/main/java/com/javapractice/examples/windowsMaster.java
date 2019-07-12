@@ -16,6 +16,7 @@ public class windowsMaster {
 		float cost;
 		float perimeterOfWindow;
 		
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter height of the window: ");
