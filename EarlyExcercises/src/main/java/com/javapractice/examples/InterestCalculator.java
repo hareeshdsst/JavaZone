@@ -23,7 +23,8 @@ public class InterestCalculator {
 		double finalPrincipalAmount = numberOfYears * amountEachYear;
 		
 		System.out.println("The year number " + numberOfYears);
-		System.out.println("The principal at the beginning of the year " + pricipalAmountBeginningYear) ;
+		System.out.println("The principal at the beginning of the year " + pricipalAmountBeginningYear
+				) ;
 		System.out.println("The total amount of interest earned for the year" + amountEachYear);
 		System.out.println("The principal at the end of the year : " + finalPrincipalAmount );
 	}
