@@ -19,7 +19,7 @@ public class LuckySevens {
 
 		do {
 			rollCount++;
-			roll = rng.nextInt(6) + 1 + rng.nextInt(6) + 1;
+			roll = 2 * (rng.nextInt(6) + 1);
 			if (roll == 7) {
 				currentMoney += 6;
 			} else {
