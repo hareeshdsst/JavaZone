@@ -42,13 +42,9 @@ public class Capitals {
 		System.out.println("STATE | CAPITAL PAIRS");
 		System.out.println("====================");
 
-		Map<String, Capitals> map = new TreeMap<String, Capitals>(stateCapitals); // to
-																					// sort
-																					// hashmap
-																					// alphabetically
+		Map<String, Capitals> map = new TreeMap<String, Capitals>(stateCapitals); // to sort hashmap alphabetically
 
-		Set keys = map.entrySet();// Iterate over key-value set instead of
-									// iterating over key and grabbing value.
+		Set keys = map.entrySet();// Iterate over key-value set instead of iterating over key and grabbing value.
 
 		Iterator iterator = keys.iterator();// iterator for treemap
 		while (iterator.hasNext()) {
