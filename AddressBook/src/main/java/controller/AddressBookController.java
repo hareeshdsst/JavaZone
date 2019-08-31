@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import dao.AddressBookDao;
+import dao.AddressBookDaoException;
 import dto.Address;
 import ui.AddressBookView;
 
@@ -27,20 +28,25 @@ public class AddressBookController {
 			switch (menuSelection) {
 			case 1:
 				addAddress();
+				break;
 			case 2:
 				removeAddress();
+				break;
 			case 3:
-				viewNumberOfAddress(null);
-			case 4:
-				listAllAddress();
-			case 5:
 				findAddress();
+				break;
+			case 4:
+				viewNumberOfAddress();
+				break;
+			case 5:
+				listAllAddress();
+				break;
 			case 6:
 				keepGoing = false;
 				break;
 			default:
 				unKnownCommand();
-
+				break;
 			}
 		}
 		exitMessage();
@@ -69,9 +75,9 @@ public class AddressBookController {
 		addressBookView.displayAddressList(addressList);
 	}
 
-	private void viewNumberOfAddress(Map<String, Address> address) {
-		addressBookView.displayNumberOfAddress();
-		addressBookDao.getNumberOfAddress(address);
+	private void viewNumberOfAddress() {
+		addressBookView.displayNumberOfAddress(addressBookDao.getNumberOfAddress());
+	
 		addressBookView.displayNumberSuccessAddress();
 	}
 

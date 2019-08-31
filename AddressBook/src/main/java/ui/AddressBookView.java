@@ -23,7 +23,7 @@ public class AddressBookView {
 		String state = io.readString("Please enter your City and  State");
 		String zip = io.readString("Please enter your ZipCode");
 
-		Address currentAddress = new Address(lastName);
+		Address currentAddress = new Address();
 		currentAddress.setLastName(lastName);
 		currentAddress.setFirstName(firstName);
 		currentAddress.setStreet(street);
@@ -38,7 +38,7 @@ public class AddressBookView {
 	}
 
 	public void displayCreateSuccessBanner() {
-		io.print("======= Address created successfully. Please hit enter to continue");
+		io.readString("======= Address created successfully. Please hit enter to continue");
 	}
 
 	public void displayAddressList(List<Address> addressList) {
@@ -68,7 +68,8 @@ public class AddressBookView {
 		}else {
 			io.print("No such address");
 		}
-		io.print("Please hit enter to continue");
+		io.readString("Please hit enter to continue");
+		
 	}
 	
 	public void removeAddressBanner() {
@@ -79,8 +80,9 @@ public class AddressBookView {
 		io.print("======= Address removed successfully. Please hit enter to continue");
 	}
 	
-	public void displayNumberOfAddress() {
+	public void displayNumberOfAddress(int size) {
 		io.print("======= Number of addresses available");
+		io.print(size+ "");
 	}
 	
 	public void displayNumberSuccessAddress() {

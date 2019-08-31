@@ -9,9 +9,6 @@ public class Address {
 	public String zipCode;
 
 	
-	public Address(String lastName) {
-		this.lastName = lastName;
-	}
 
 	public String getFirstName() {
 		return firstName;

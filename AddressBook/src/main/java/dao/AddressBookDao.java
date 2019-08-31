@@ -10,7 +10,7 @@ public interface AddressBookDao {
 
 	Address removeAddress(String lastName);
 
-	int getNumberOfAddress(Map<String, Address> address);
+	int getNumberOfAddress();
 
 	List<Address> listAllAddress();
 
