@@ -33,7 +33,6 @@ public class AddressBookDaoFileImpl implements AddressBookDao {
 		try {
 			writeRoster();
 		} catch (AddressBookDaoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return currentAddress;
@@ -44,7 +43,6 @@ public class AddressBookDaoFileImpl implements AddressBookDao {
 		try {
 			writeRoster();
 		} catch (AddressBookDaoException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return removeAdd;
@@ -109,7 +107,7 @@ public class AddressBookDaoFileImpl implements AddressBookDao {
 		} catch (IOException e) {
 			throw new AddressBookDaoException("Could not save address book data.", e);
 		}
-		List<Address> addressList = listAllAddress();
+		List<Address> addressList = this.listAllAddress();
 
 		for (Address address : addressList) {
 			out.println(address.getFirstName() + DELIMITER + address.getLastName() + DELIMITER + address.getCityState()
