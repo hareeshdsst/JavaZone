@@ -1,6 +1,7 @@
 package com.sguild.dao;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,13 +18,12 @@ import com.sguild.dto.Student;
 public class ClassRosterDaoFileImpl implements ClassRosterDao {
 
 	public static final String ROSTER_FILE = "roster.txt";
-	public static final String DELIMITER = "|";
+	public static final String DELIMITER = "::";
 	private Map<String, Student> students = new HashMap<String, Student>();
 
 	public Student addStudent(String studentId, Student student) throws ClassRosterPersistenceException {
-
 		Student newStudent = students.put(studentId, student);
-		writeRoster();
+		writeRoster();  
 		return newStudent;
 	}
 
@@ -67,12 +67,18 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
 	@SuppressWarnings({ "unused", "resource" })
 	private void loadRoster() throws ClassRosterPersistenceException {
 
-		Scanner scanner;
+		Scanner scanner = null;
 
 		try {
-			scanner = new Scanner(new BufferedReader(new FileReader(ROSTER_FILE)));
-		} catch (FileNotFoundException e) {
+			File roster = new File(ROSTER_FILE);
+			roster.createNewFile();
+			scanner = new Scanner(new BufferedReader(new FileReader(roster)));
+		} catch (FileNotFoundException e) { 
 			throw new ClassRosterPersistenceException("Could not load roster data in to memory.", e);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		String currentLine;
 
@@ -81,7 +87,6 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
 		while (scanner.hasNextLine()) {
 			currentLine = scanner.nextLine();
 			currentTokens = currentLine.split(DELIMITER);
-
 			Student currentStudent = new Student(currentTokens[0]);
 			currentStudent.setFirstName(currentTokens[1]);
 			currentStudent.setLastName(currentTokens[2]);
