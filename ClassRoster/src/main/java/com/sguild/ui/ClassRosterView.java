@@ -45,7 +45,7 @@ public class ClassRosterView {
 	public void displayStudentList(List<Student> studentList) {
 		for (Student currentStudent : studentList) {
 			io.print(currentStudent.getStudentId() + ": " + currentStudent.getFirstName() + " "
-					+ currentStudent.getLastName());
+					+ currentStudent.getLastName() + " " + currentStudent.getCohort());
 		}
 		io.readString("Please hit enter to continue.");
 	}
