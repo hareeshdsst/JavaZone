@@ -38,8 +38,9 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
 	}
 
 	public Student removeStudent(String studentId) throws ClassRosterPersistenceException {
+		
+		Student removeStudent = students.remove(studentId);
 		writeRoster();
-		Student removeStudent = students.get(studentId);
 		return removeStudent;
 	}
 

@@ -25,7 +25,6 @@ public class ClassRosterDaoTest {
 		for (Student student : studentList) {
 			dao.removeStudent(student.getStudentId());
 		}
-		System.out.println(studentList.toString());
 	}
 
 	@Test
@@ -47,6 +46,15 @@ public class ClassRosterDaoTest {
 
 	@Test
 	public void testRemoveStudent() throws Exception {
+		System.out.println("Removing Students");
+		for (Student student : dao.getAllStudents()) {
+			dao.removeStudent(student.getStudentId());
+		}
+		System.out.println("=====================");
+		System.out.println("Students size before in DAO: " + dao.getAllStudents().size());
+		for(Student stud : dao.getAllStudents()) {
+			System.out.println("Student Name: " + stud.getFirstName());
+		}
 		// Set up the Data or Arrange Data.
 		Student student1 = new Student("001");
 		student1.setFirstName("Ravi");
@@ -63,6 +71,10 @@ public class ClassRosterDaoTest {
 		// student1 On Data
 		dao.addStudent(student2.getStudentId(), student2);
 		dao.removeStudent(student1.getStudentId());
+		System.out.println("Students size in DAO: " + dao.getAllStudents().size());
+		for(Student stud : dao.getAllStudents()) {
+			System.out.println("Student Name: " + stud.getFirstName());
+		}
 		// Assert
 		assertEquals(1, dao.getAllStudents().size());
 		assertNull(dao.getStudent(student1.getStudentId()));
