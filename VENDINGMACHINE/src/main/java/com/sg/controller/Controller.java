@@ -1,5 +1,6 @@
 package com.sg.controller;
 
+import com.sg.dao.PersistenceException;
 import com.sg.service.Service;
 import com.sg.ui.View;
 
@@ -16,6 +17,27 @@ public class Controller {
 	}
 
 	public void run() {
+
 		view.displayEntryBanner();
+		
+		try {
+			//Start of program asks for money before getting choices.
+			displayVendorItems();
+			
+			
+		}
+		
 	}
+
+	/** Helper Methods **/
+	private void displayVendorItems() throws PersistenceException {
+		view.displayOutOfStock(service.getAllItemsOutOfStock());
+		displayItemsInStock();
+	}
+
+	private void displayItemsInStock() {
+	
+		
+	}
+
 }
