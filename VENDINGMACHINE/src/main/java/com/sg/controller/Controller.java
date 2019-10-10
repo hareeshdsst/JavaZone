@@ -1,6 +1,9 @@
 package com.sg.controller;
 
+import java.util.List;
+
 import com.sg.dao.PersistenceException;
+import com.sg.model.VendableItem;
 import com.sg.service.Service;
 import com.sg.ui.View;
 
@@ -19,14 +22,15 @@ public class Controller {
 	public void run() {
 
 		view.displayEntryBanner();
-		
+
 		try {
-			//Start of program asks for money before getting choices.
+			// Start of program asks for money before getting choices.
 			displayVendorItems();
-			
-			
+
+		} catch (Exception e) {
+
 		}
-		
+
 	}
 
 	/** Helper Methods **/
@@ -35,9 +39,13 @@ public class Controller {
 		displayItemsInStock();
 	}
 
-	private void displayItemsInStock() {
-	
-		
+	private void displayItemsInStock() throws PersistenceException {
+		List<VendableItem> itemsInStock = service.getAllItemsInStock();
+		if (itemsInStock.isEmpty()) {
+			view.displayOutOfService();
+		}else {
+			//view.i
+		}
 	}
 
 }
