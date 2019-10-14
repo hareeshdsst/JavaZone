@@ -40,8 +40,10 @@ public class ServiceImpl implements Service {
 
 	@Override
 	public List<VendableItem> getAllItemsInStock() throws PersistenceException {
-		return dao.getAllItems().stream().filter((item) -> item.getCount() > 0)// Check the logic
+		List<VendableItem> list = dao.getAllItems().stream().filter((item) -> item.getCount() > 0)// Check the logic
 				.collect(Collectors.toList());
+		System.out.println("list :" + list.size());
+		return list;
 	}
 
 	@Override
