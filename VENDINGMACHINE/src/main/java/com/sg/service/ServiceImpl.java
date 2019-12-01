@@ -1,74 +1,105 @@
 package com.sg.service;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import com.sg.dao.Dao;
 import com.sg.dao.PersistenceException;
-import com.sg.model.VendableItem;
+import com.sg.dao.VendingMachineDao;
+import com.sg.model.Change;
+import com.sg.model.Item;
 
+/**
+ * @author hareeshdevarasetty
+ *
+ */
 public class ServiceImpl implements Service {
+	private VendingMachineDao dao;
 
-	private Dao dao;
-
-	public ServiceImpl(Dao dao) {
+	public ServiceImpl(VendingMachineDao dao) {
 		this.dao = dao;
 	}
 
-	@Override
-	public VendableItem getItem(String name) throws PersistenceException, NoItemInventoryException {
-		VendableItem item = dao.getItem(name);
-		if (item != null && item.getCount() == 0) {
-			throw new NoItemInventoryException();
-		}
-		return item;
-	}
+	// initial amount is Zero
+	private BigDecimal currentMoney = new BigDecimal("0");
 
 	@Override
-	public void setCount(String name, int newCount) throws PersistenceException {
-		if (newCount < 0) {
-			throw new PersistenceException("newCount must be >= 0");
-		}
-		dao.setCount(name, newCount);
-	}
-
-	@Override
-	public List<VendableItem> getAllItems() throws PersistenceException {
+	public List<Item> getAllItems() throws PersistenceException {
 		return dao.getAllItems();
 	}
 
+	// Pass through method
 	@Override
-	public List<VendableItem> getAllItemsInStock() throws PersistenceException {
-		List<VendableItem> list = dao.getAllItems().stream().filter((item) -> item.getCount() > 0)// Check the logic
-				.collect(Collectors.toList());
-		System.out.println("list :" + list.size());
-		return list;
+	public List<Item> getAllItemsFiltered() throws PersistenceException {
+		return dao.getAllItemsFiletered();
 	}
 
+	// Pass through method
 	@Override
-	public List<VendableItem> getAllItemsOutOfStock() throws PersistenceException {
-		return dao.getAllItems().stream().filter((item) -> item.getCount() <= 0).collect(Collectors.toList());
+	public Item getItem(String itemId) throws PersistenceException {
+		return dao.getItem(itemId);
 	}
 
+	// Pass through method
 	@Override
-	public BigDecimal vendItem(BigDecimal amountInMachine, VendableItem item)
-			throws InsufficentFundsException, PersistenceException {
-		if (item.getPrice().compareTo(amountInMachine) > 0) {
-			throw new InsufficentFundsException("Insufficent Funds");
+	public Change purchaseItem(String itemId) throws PersistenceException, NoItemInventoryException, InsufficentFundsException {
+		Item itemToPurchase = dao.getItem(itemId);
+		BigDecimal oneHundred = new BigDecimal("100");
+		if(validateItem(itemId)) {
+			if(currentMoney.compareTo(itemToPurchase.getItemPrice()) >= 0) {
+			//we have item in stock and have enough money
+			//Remanining money to Integer
+			int remaniningCash = currentMoney.subtract(itemToPurchase.getItemPrice()).multiply(oneHundred).intValueExact();
+			//reduce inventory by 1
+			makeSaleReduceInventory(itemId);
+			//get change
+			return giveChange(remaniningCash);
+		}else {
+			throw new InsufficentFundsException("Not enough money");
 		}
-		setCount(item.getName(), item.getCount() - 1);
-		return amountInMachine.subtract(item.getPrice());
+		}else {
+			throw new InsufficentFundsException("Quantity = 0, cannot purchase");
+		}
+	}
+
+	private Boolean validateItem(String itemToPurchase) throws PersistenceException {
+		Item item = dao.getItem(itemToPurchase);
+		if (item.getItemQuantity() <= 0) {
+			throw new PersistenceException("Quantity = 0,cannot purchase");
+		} else {
+			return true;
+		}
+
+	}
+
+	// Pass through method
+	@Override
+	public Item makeSaleReduceInventory(String itemId) throws PersistenceException, NoItemInventoryException {
+		return dao.makeSaleReduceInventory(itemId);
 	}
 
 	@Override
-	public VendableItem addItem(VendableItem item) throws PersistenceException {
-		return dao.addItem(item);
+	public void setCurrentMoney(BigDecimal moneyEntry) {
+    this.currentMoney = this.currentMoney.add(moneyEntry, MathContext.UNLIMITED);
 	}
 
 	@Override
-	public VendableItem removeItem(String itemName) throws PersistenceException {
-		return dao.removeItem(itemName);
+	public BigDecimal getCurrentMoney() {
+		return currentMoney;
+	}
+
+	@Override
+	public Change giveChange(int remaniningCash) throws PersistenceException {
+		//Update cash inserted
+		this.currentMoney = new BigDecimal("0");
+		return new Change(remaniningCash);
+	}
+
+	@Override
+	public Change cancelGiveChange() throws PersistenceException {
+		BigDecimal oneHundred = new BigDecimal("100");
+		int remaniningCash = currentMoney.multiply(oneHundred).intValueExact();
+		return giveChange(remaniningCash);
 	}
 
 }

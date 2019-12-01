@@ -49,7 +49,7 @@ public class UserIOConsoleImpl implements UserIO {
 	public int readInt(String prompt, int min, int max) {
 		int amount;
 		do {
-			amount  = Integer.parseInt(prompt);
+			amount  = Integer.parseInt(readString(prompt));
 		}while(amount < min || amount > max);
 		return amount;
 	}

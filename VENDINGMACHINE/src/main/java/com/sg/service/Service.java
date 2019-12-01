@@ -4,66 +4,31 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.sg.dao.PersistenceException;
-import com.sg.model.VendableItem;
+import com.sg.model.Change;
+import com.sg.model.Item;
 
+/**
+ * @author hareeshdevarasetty
+ *
+ */
 public interface Service {
 
+	List<Item> getAllItems() throws PersistenceException;
 
-    /**
-     * @param name the name of the item
-     * @return a {@link VendableItem} with the given name or null no item with
-     * the name exists*
-     */
-    public VendableItem getItem(String name) throws PersistenceException, NoItemInventoryException;
+	List<Item> getAllItemsFiltered() throws PersistenceException;
 
-    /**
-     *
-     * @param name the name of the item
-     * @param newCount the updated count for the item
-     */
-    public void setCount(String name, int newCount) throws PersistenceException;
+	Item getItem(String itemId) throws PersistenceException;
 
-    /**
-     * @return all the items in the vending machine
-     */
-    public List<VendableItem> getAllItems() throws PersistenceException;
+	Change purchaseItem(String itemId) throws PersistenceException, NoItemInventoryException, InsufficentFundsException;
 
-    /**
-     * @return all the items in the vending machine that are in stock
-     */
-    public List<VendableItem> getAllItemsInStock() throws PersistenceException;
+	Item makeSaleReduceInventory(String itemId) throws PersistenceException, PersistenceException, NoItemInventoryException;
 
-    /**
-     * @return all the items in the vending machine that are in stock
-     */
-    public List<VendableItem> getAllItemsOutOfStock() throws PersistenceException;
+	public void setCurrentMoney(BigDecimal moneyEntry);
 
-    /**
-     * Vends a item and removes one of the specific item from the machine
-     * 
-     * @param amountInMachine the amount currently in the vending machine
-     * @param item the item to vend
-     * @return the amount in the machine after vending the item
-     * @throws InsufficentFundsException if item price > amountInMachine
-     * @throws PersistenceException if there's a error updating the items count
-     */
-    public BigDecimal vendItem(BigDecimal amountInMachine, VendableItem item) throws InsufficentFundsException, PersistenceException;
+	public BigDecimal getCurrentMoney();
 
-    /**
-     * adds a new item to the vending machine
-     *
-     * @param item the item to add
-     * @return null if its the first time a item was added, otherwise returns
-     * the item
-     */
-    public VendableItem addItem(VendableItem item) throws PersistenceException;
+	public Change giveChange(int remaniningCash) throws PersistenceException;
 
-    /**
-     * removes a item from the vending machine
-     *
-     * @param name the name of the item to remove
-     * @return the VendableItem removed or null if nothing was removed
-     */
-    public VendableItem removeItem(String itemName) throws PersistenceException;
+	public Change cancelGiveChange() throws PersistenceException;
 
 }

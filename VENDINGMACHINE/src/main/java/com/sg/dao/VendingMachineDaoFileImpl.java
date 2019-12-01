@@ -82,8 +82,8 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 			currentLinetokens = currentLine.split(DELIMETER);
 			Item currentItem = new Item(currentLinetokens[0]);
 			currentItem.setItemName(currentLinetokens[1]);
-			currentItem.setItemPrice(currentLinetokens[2]);
-			Integer itemQuantity = Integer.parseInt(currentLinetokens[3]);
+			currentItem.setItemPrice(currentLinetokens[3]);
+			Integer itemQuantity = Integer.parseInt(currentLinetokens[2]);
 			currentItem.setItemQuantity(itemQuantity);
 			vendableMap.put(currentItem.getItemId(),currentItem);
 		}
