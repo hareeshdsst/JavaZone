@@ -35,7 +35,6 @@ public class Controller {
 				if (choice == service.getAllItemsInStock().size() + 1) {
 					break;
 				}
-
 				VendableItem item = choiceToItem(choice);
 				try {
 					BigDecimal change = vendItem(item);

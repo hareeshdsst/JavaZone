@@ -1,4 +1,4 @@
-package com.sg.VENDINGMACHINE;
+package com.sg.app;
 
 import com.sg.controller.Controller;
 import com.sg.dao.Dao;
