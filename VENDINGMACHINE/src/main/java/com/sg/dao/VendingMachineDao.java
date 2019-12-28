@@ -19,6 +19,8 @@ public interface VendingMachineDao {
 	
 	Item makeSaleReduceInventory(String itemID) throws NoItemInventoryException;
 	
-
+	//Added for testing Junit
+		Item removeItem(String itemID) throws NoItemInventoryException;
+		Item addItem(String itemID, Item item) throws NoItemInventoryException;
 	
 }

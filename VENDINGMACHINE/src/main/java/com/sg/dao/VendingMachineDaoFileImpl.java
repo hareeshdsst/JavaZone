@@ -22,11 +22,17 @@ import com.sg.service.NoItemInventoryException;
  */
 public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
-	private static final String INVENTORY_FILE = "inventory.txt";
+	private   String inventoryFile = "inventory.txt";
 	private static final String DELIMETER = "::";
 
 	Map<String, Item> vendableMap = new HashMap<>();
-
+	
+	public VendingMachineDaoFileImpl(String inventoryFile) {
+		this.inventoryFile = inventoryFile;
+	}
+	public VendingMachineDaoFileImpl() {
+	
+	}
 	/**
 	 *
 	 */
@@ -71,7 +77,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 	private void loadInventory() throws PersistenceException {
 		Scanner scanner;
 		try {
-			scanner = new Scanner(new BufferedReader(new FileReader(INVENTORY_FILE)));
+			scanner = new Scanner(new BufferedReader(new FileReader(inventoryFile)));
 		}catch (FileNotFoundException e) {
 			throw new PersistenceException("File not found. Couldnot load data in to memory", e);
 		}
@@ -96,7 +102,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 	private void writeInventory() throws PersistenceException {
     PrintWriter out;
 		try {
-			out = new PrintWriter(new FileWriter(INVENTORY_FILE));
+			out = new PrintWriter(new FileWriter(inventoryFile));
 		}catch(IOException e) {
 			throw new PersistenceException("Could not save inventory data.", e);
 		}
@@ -105,10 +111,30 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 		for(Item item : items) {
 			out.println(item.getItemId() + DELIMETER 
 					 +  item.getItemName() + DELIMETER
-					 +  item.getItemPrice() + DELIMETER
-				     +  item.getItemQuantity());
+					 +  item.getItemQuantity() + DELIMETER
+				     +  item.getItemPrice());
 			out.flush();
 		}
 		out.close();
+	}
+	@Override
+	public Item removeItem(String itemID) throws NoItemInventoryException {
+		Item removedItem = vendableMap.remove(itemID);
+		try {
+			writeInventory();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
+				return removedItem;
+	}
+	@Override
+	public Item addItem(String itemID, Item item) throws NoItemInventoryException {
+		Item addedItem = vendableMap.put(itemID, item);
+		try {
+			writeInventory();
+		} catch (PersistenceException e) {
+			e.printStackTrace();
+		}
+		return addedItem;
 	}
 }
