@@ -1,3 +1,4 @@
+
 package com.sg.model;
 
 /**
@@ -11,8 +12,8 @@ public class Change {
 	private int numQuaters=0;
 	
 	public Change(int numPennies) {
-		if(numPennies >= 25) {//55
-			this.numQuaters = numPennies / 25;//2quaters 5 pennies
+		if(numPennies >= 25) {
+			this.numQuaters = numPennies / 25;//$5 quaters 
 			numPennies -= this.numQuaters * 25;//55 - 50 = 5 pennies
 		}
 		
@@ -27,7 +28,6 @@ public class Change {
 		if(numPennies < 5) {
 			this.numPennies = numPennies;
 		}
-		
 	}
 
 	public int getNumPennies() {

@@ -69,7 +69,6 @@ public class ServiceImpl implements Service {
 		} else {
 			return true;
 		}
-
 	}
 
 	// Pass through method
