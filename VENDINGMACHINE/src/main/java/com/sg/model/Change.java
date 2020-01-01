@@ -5,44 +5,41 @@ package com.sg.model;
  *
  */
 public class Change {
-	private int numPennies=0;
-	private int numDimes=0;
-	private int numNickles=0;
-	private int numQuaters=0;
-	
-	public Change(int numPennies) {
-		if(numPennies >= 25) {//55
-			this.numQuaters = numPennies / 25;//2quaters 5 pennies
-			numPennies -= this.numQuaters * 25;//55 - 50 = 5 pennies
-		}
-		
-		if(numPennies >= 10) {
-			this.numDimes = numPennies / 10;
-			numPennies -= this.numDimes * 10;
-		}
-		if(numPennies >= 5) {
-			this.numNickles = numPennies / 10;
-			numPennies -= this.numNickles * 5;
-		}
-		if(numPennies < 5) {
-			this.numPennies = numPennies;
-		}
-		
-	}
+	private int numPennies = 0;
+	private int numDimes = 0;
+	private int numNickles = 0;
+	private int numQuaters = 0;
 
 	public int getNumPennies() {
 		return numPennies;
+	}
+
+	public void setNumPennies(int numPennies) {
+		this.numPennies = numPennies;
 	}
 
 	public int getNumDimes() {
 		return numDimes;
 	}
 
+	public void setNumDimes(int numDimes) {
+		this.numDimes = numDimes;
+	}
+
 	public int getNumNickles() {
 		return numNickles;
+	}
+
+	public void setNumNickles(int numNickles) {
+		this.numNickles = numNickles;
 	}
 
 	public int getNumQuaters() {
 		return numQuaters;
 	}
+
+	public void setNumQuaters(int numQuaters) {
+		this.numQuaters = numQuaters;
+	}
+
 }

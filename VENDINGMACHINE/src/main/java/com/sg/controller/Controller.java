@@ -1,7 +1,12 @@
 package com.sg.controller;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.sg.dao.PersistenceException;
 import com.sg.model.Change;
+import com.sg.model.Item;
 import com.sg.service.InsufficentFundsException;
 import com.sg.service.NoItemInventoryException;
 import com.sg.service.Service;
@@ -12,7 +17,7 @@ import com.sg.ui.View;
  *
  */
 public class Controller {
-	
+
 	private View view;
 	private Service service;
 
@@ -21,73 +26,129 @@ public class Controller {
 		this.service = service;
 	}
 
-	public void run() {
-		boolean keepGoing = true;
-		int menuSelection =0;
-		try {
-			while(keepGoing) {
-				menuSelection = getMenuSelection();	
-				switch(menuSelection) {
-				case 1:
-					addMoney();
-					break;
-				case 2:
-					purchase();
-					break;
-				case 3:
-					giveChange();
-					break;
-				case 4:
-					keepGoing = false;
-					break;
-				default:
-					unknownCommand();
-				}
-			}
-			exitMessage();
-		}catch(PersistenceException | InsufficentFundsException | NoItemInventoryException e) {
-			view.displayErrorMessage(e.getMessage());
-		}
-	}
+	// -------------Main Menu ---------------//
 
-	private void exitMessage() {
+	public void run() throws PersistenceException {
+		String menuSelection;
+
+		boolean keepGoing = true;
+
+		while (keepGoing) {
+			menuSelection = view.printMenuAndGetSelection();
+
+			switch (menuSelection) {
+			case "1":
+				userPanel();
+				break;
+			case "2":
+				keepGoing = false;
+				break;
+			case "abc":
+				ExtraMenu();
+				break;
+			default:
+				view.displaExitBanner();
+				break;
+			}
+		}
 		view.displaExitBanner();
 	}
 
-	private void unknownCommand() {
-		view.displayUnknownCommandBanner();
+	private void ExtraMenu() throws PersistenceException {
+
+		int userSelection = 0;
+		boolean hasErrors = false;
+		boolean keepGoing = true;
+
+		do {
+			try {
+				userSelection = view.displaySecretMenu();
+				hasErrors = false;
+
+				switch (userSelection) {
+				case 1:
+					addItem();
+					break;
+				case 2:
+					listAllItems();
+					break;
+				case 3:
+					removeItems();
+					break;
+				case 4:
+					hasErrors = false;
+					keepGoing = false;
+					break;
+				}
+
+			} catch (NumberFormatException e) {
+				hasErrors = true;
+				view.displayErrorMessage(e.getMessage());
+			}
+		} while (hasErrors || keepGoing);
+
 	}
 
-	private void giveChange() throws PersistenceException {
-		view.displayChange(service.cancelGiveChange());
-	}
+	private void removeItems() throws PersistenceException {
+		view.displayRemoveItemBanner();
 
-	private void purchase() throws PersistenceException, NoItemInventoryException, InsufficentFundsException{
-        Boolean success = false;
-        do {
-        	try {
-        		Change change = service.purchaseItem(view.getItemChoice());
-        		view.displayChange(change);
-        		view.displayPurchaseSuccess();
-        		success = true;
-        	}catch(PersistenceException | NoItemInventoryException | InsufficentFundsException e) {
-        		view.displayErrorMessage(e.getMessage());
-        		continue;
-        	}
-        }while(false);
-	}
-	private void addMoney() {
-		service.setCurrentMoney(view.getMoneyEntry());
-		view.displayCurrentMoney(service.getCurrentMoney());
-	}
-
-	private int getMenuSelection() {
+		String strItem = view.removeItem();
 		try {
-			view.displayAllItems(service.getAllItemsFiltered());
-		}catch(PersistenceException e) {
+			service.removeItem(strItem);
+			view.displaySuccessRemoveItemBanner();
+		} catch (NoItemInventoryException e) {
 			view.displayErrorMessage(e.getMessage());
 		}
-		return view.printMenuAndGetSelection(service.getCurrentMoney());
+
+	}
+
+	private void listAllItems() throws PersistenceException {
+		List<Item> list = service.getAllItems();
+		view.displayAllItems(list);
+	}
+
+	private void addItem() throws PersistenceException {
+		view.displayAddBanner();
+
+		try {
+			Item itemToAdd = view.getItemToAdd();
+			service.addItem(itemToAdd);
+			view.displayAddSuccessBanner(itemToAdd);
+		} catch (NoItemInventoryException e) {
+			view.displayErrorMessage(e.getMessage());
+		}
+
+	}
+
+	private void userPanel() throws PersistenceException {
+
+		boolean hasErrors = false;
+
+		Change change;
+
+		List<Item> allItems = service.getAllItems();
+		ArrayList<Item> orderedItems = new ArrayList<>(allItems);
+
+		do {
+			try {
+				BigDecimal moneyFromConsumer = view.displayUserMenuItemsGetMoney(allItems, service.getCurrentMoney());
+				service.addToMoney(moneyFromConsumer);
+				Item itemSelected = view.getItemSelection(orderedItems);
+
+				if (itemSelected == null) {
+					view.displaExitBannerWithMoney(service.getCurrentMoney());
+					hasErrors = false;
+				} else {
+					change = service.buyItem(itemSelected.getItemName(), service.getCurrentMoney());
+					hasErrors = false;
+					view.displayPurchaseSuccess(itemSelected);
+					view.displayChange(change);
+				}
+			} catch (NoItemInventoryException | InsufficentFundsException | IndexOutOfBoundsException e) {
+				hasErrors = true;
+				view.displayErrorMessage(e.getMessage());
+			}
+		} while (hasErrors);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.sg.ui;
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+
 public class UserIOConsoleImpl implements UserIO {
 	Scanner sc = new Scanner(System.in);
 	
@@ -40,10 +41,18 @@ public class UserIOConsoleImpl implements UserIO {
 		return amount;
 	}
 
-	@Override
-	public int readInt(String prompt) {
-		return Integer.parseInt(prompt);
-	}
+	  @Override
+	    public int readInt(String prompt)  {
+	        System.out.println(prompt);
+	        String strInput = sc.nextLine();
+	        int input = 0;
+	        try {
+	            input = Integer.parseInt(strInput);
+	        } catch (NumberFormatException e) {
+	            //an exception translation
+	        }
+	        return input;
+	    }
 
 	@Override
 	public int readInt(String prompt, int min, int max) {

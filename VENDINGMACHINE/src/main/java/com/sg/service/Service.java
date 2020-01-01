@@ -13,22 +13,21 @@ import com.sg.model.Item;
  */
 public interface Service {
 
+	Change buyItem(String itemId, BigDecimal money)
+			throws PersistenceException, NoItemInventoryException, InsufficentFundsException;
+
 	List<Item> getAllItems() throws PersistenceException;
 
-	List<Item> getAllItemsFiltered() throws PersistenceException;
+	Item removeItem(String itemId) throws PersistenceException, NoItemInventoryException;
+
+	int addItem(Item item) throws PersistenceException, NoItemInventoryException;
+
+	Change giveChange(BigDecimal userMoney, BigDecimal price) throws PersistenceException;
 
 	Item getItem(String itemId) throws PersistenceException;
 
-	Change purchaseItem(String itemId) throws PersistenceException, NoItemInventoryException, InsufficentFundsException;
-
-	Item makeSaleReduceInventory(String itemId) throws PersistenceException, PersistenceException, NoItemInventoryException;
-
-	public void setCurrentMoney(BigDecimal moneyEntry);
+	String addToMoney(BigDecimal userMoney);
 
 	public BigDecimal getCurrentMoney();
-
-	public Change giveChange(int remaniningCash) throws PersistenceException;
-
-	public Change cancelGiveChange() throws PersistenceException;
 
 }
