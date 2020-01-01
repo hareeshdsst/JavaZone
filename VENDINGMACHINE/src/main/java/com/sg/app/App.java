@@ -1,6 +1,6 @@
 package com.sg.app;
-
 import com.sg.controller.Controller;
+import com.sg.dao.PersistenceException;
 import com.sg.dao.VendingMachineDao;
 import com.sg.dao.VendingMachineDaoFileImpl;
 import com.sg.service.Service;
@@ -14,7 +14,7 @@ import com.sg.ui.View;
  *
  */
 public class App {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws PersistenceException {
 		// Instantiate the UserIO Implementations
 		UserIO io = new UserIOConsoleImpl();
 		// Instantiate the View Implementation and wire the UserIO into it.

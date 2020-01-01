@@ -11,18 +11,16 @@ import com.sg.service.NoItemInventoryException;
  */
 public interface VendingMachineDao {
 
-	List<Item> getAllItems() throws PersistenceException;   
-	
-	List<Item> getAllItemsFiletered() throws PersistenceException;
-	
-	Item getItem(String itemID) throws PersistenceException;
-	
-	Item makeSaleReduceInventory(String itemID) throws NoItemInventoryException;
-	
-	//Added for testing Junit
-	Item removeItem(String itemID) throws NoItemInventoryException;
-	Item addItem(String itemID, Item item) throws NoItemInventoryException;
+	List<Item> getAllItems() throws PersistenceException;
 
-	
-	
+	Item removeItem(String itemID) throws NoItemInventoryException;
+
+	Item addNewItem(Item item) throws NoItemInventoryException;
+
+	Item addToItem(Item item) throws NoItemInventoryException, PersistenceException;
+
+	Item getItem(String itemID) throws PersistenceException;
+
+	Item buyItem(String itemName) throws PersistenceException;
+
 }
