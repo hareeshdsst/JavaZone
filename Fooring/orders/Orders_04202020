@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+17,Khamma,MI,5.75,Tile,10.00,3.50,4.15,35.00,41.50,4.40,80.90

@@ -1,0 +1,3 @@
+2020-01-19 01:46:44 : addOrder:  com.sg.flooring.model.Order@75329a49
+2020-01-19 01:50:13 : addOrder:   orderNumber: 19 |Customer Name: kamar |State: MI
+2020-01-19 05:10:17 : removeOrder:   orderNumber: 5 |Customer Name: Quest |State: MI

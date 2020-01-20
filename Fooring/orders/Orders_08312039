@@ -1,0 +1,7 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+10,Yotta,IN,6.00,Laminate,100,1.75,2.10,175.00,210.00,23.10,408.10
+11,Vedhs,IN,6.00,Laminate,100,1.75,2.10,175.00,210.00,23.10,408.10
+12,Yotta,IN,6.00,Laminate,100,1.75,2.10,175.00,210.00,23.10,408.10
+13,Vedhs,IN,6.00,Laminate,100,1.75,2.10,175.00,210.00,23.10,408.10
+14,Yotta,IN,6.00,Laminate,100,1.75,2.10,175.00,210.00,23.10,408.10
+15,Vedhs,IN,6.00,Laminate,100,1.75,2.10,175.00,210.00,23.10,408.10

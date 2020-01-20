@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+19,kamar,MI,5.75,Wood,10.00,5.15,4.75,51.50,47.50,5.69,104.69
