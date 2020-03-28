@@ -1,0 +1,10 @@
+
+Job Name							 Machine						      Status		   Start Time		End Time	     Minutes Duration
+---------------------------------------------------------------- ------------------------------------------------------------ -------------------- -------------------- -------------------- ----------------
+161602_IR_CRA_S2_TOPSIDE_BOX												      SUCCESS		   03/18/2020 19:36:02	03/18/2020 19:37:11		    1
+161602_IR_CRA_01_S2_TOPSIDE_ADJ 				 optima-jv-app.wlb2.nam.nsroot.net			      SUCCESS		   03/18/2020 19:36:04	03/18/2020 19:36:52		    1
+161602_IR_CRA_02_S2_TOPSIDE_ENRICH				 optima-jv-app.wlb2.nam.nsroot.net			      SUCCESS		   03/18/2020 19:36:53	03/18/2020 19:37:10		    0
+161602_IR_CRA_S3_TOPSIDE_BOX												      SUCCESS		   03/18/2020 19:42:00	03/18/2020 19:43:13		    1
+161602_IR_CRA_01_S3_TOPSIDE_ADJ 				 optima-jv-app.wlb2.nam.nsroot.net			      SUCCESS		   03/18/2020 19:42:01	03/18/2020 19:42:52		    1
+161602_IR_CRA_02_S3_TOPSIDE_ENRICH				 optima-jv-app.wlb2.nam.nsroot.net			      SUCCESS		   03/18/2020 19:42:53	03/18/2020 19:43:12		    0
+161602_IR_CRA_S5_TOPSIDE_BOX												      SUCCESS		   03/18/2020 19:54:00	03/18/2020 19:55:07		    1
